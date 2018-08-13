@@ -3,8 +3,8 @@ const User = require('./../models/user');
 
 module.exports = {
     addUser: (req, res, next) => {
-        let { name, email } = req.body;
-        const user = new User({ name: name, email: email });
+        let { name, email, password } = req.body;
+        const user = new User({ name, email, password });
         // const user = new User(req.body);
         user.save((err, user)=> {
             if (err)

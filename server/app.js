@@ -29,7 +29,8 @@ routes(router);
 // app.use(cors());
 // app.use(helmet());
 app.use(bodyParser.json());
-
+//serve static content
+app.use(express.static('../public'));
 app.use('/', router);
 
 /** start server */
