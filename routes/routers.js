@@ -1,4 +1,4 @@
-// server/routes/index.js
+// server/routes/routers.js
 const user = require('./user');
 
 module.exports = (router) => {

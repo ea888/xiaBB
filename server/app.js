@@ -2,7 +2,7 @@
 
 /** require dependencies */
 const express = require("express");
-const routes = require('../routes');
+const routes = require('../routes/routers');
 const mongoose = require('mongoose');
 // const cors = require('cors');
 // const helmet = require('helmet');
@@ -32,6 +32,10 @@ app.use(bodyParser.json());
 //serve static content
 app.use(express.static('../public'));
 app.use('/', router);
+//welcome page
+app.get('/', function(req, res){
+    res.sendfile('index.html', { root: __dirname + "/public" } );
+});
 
 /** start server */
 app.listen(port, () => {
