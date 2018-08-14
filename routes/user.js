@@ -1,4 +1,5 @@
-// server/routes/article.js
+// Bridge url mapping to controller methods.
+//In Spring, the controller will function as controller+router in NodeJs
 const userCtrl = require('./../controllers/user.ctrl');
 
 module.exports = (router) => {

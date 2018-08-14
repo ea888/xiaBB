@@ -1,4 +1,4 @@
-// server/routes/routers.js
+// combine all routers
 const user = require('./user');
 
 module.exports = (router) => {

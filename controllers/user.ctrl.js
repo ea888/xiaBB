@@ -1,4 +1,4 @@
-/** server/controllers/article.ctrl.js*/
+
 const User = require('./../models/user');
 
 module.exports = {

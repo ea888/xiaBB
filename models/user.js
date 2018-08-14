@@ -1,4 +1,4 @@
-// server/models/User.js
+// Same concept as Spring Data Entity
 const mongoose = require('mongoose');
 
 let UserSchema = new mongoose.Schema(

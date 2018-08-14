@@ -1,5 +1,3 @@
-// server/app.js
-
 /** require dependencies */
 const express = require("express");
 const routes = require('../routes/routers');
