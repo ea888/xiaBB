@@ -50,16 +50,18 @@ class Greeting extends React.Component {
     toggleLoginSignup(){
         // console.log("before click:"+this.state.login);
 
-        //have to call setState to force rendering sub doms
+        //have to call setState to force rendering sub dom
         this.state.login ? this.setState({'login':false}) : this.setState({'login':true});
         // console.log("after click:"+this.state.login);
     }
 
     renderLogin(){
+        {/* arrow function is equivalent to function.bind(this) */}
         return <Login login = {this.state.login} toggleLogin = {() => this.toggleLoginSignup()}/>;
     }
 
     render() {
+        //get state, then pass to sub dom using {}
         const login = this.state.login;
 
         return (
@@ -67,9 +69,10 @@ class Greeting extends React.Component {
             <div>
                 <h3>Welcome to XiaBB</h3>
                 {this.renderLogin()}
-                {/* must use {} expression to render sub dom */}
-                {<Signup login = {login} toggleLogin = {this.toggleLoginSignup.bind(this)}/>}
-                {<Footer />}
+                {/* pass login to props of sub dom */}
+                {/* have to bind to this, or the this keyword in function will be the sub dom */}
+                <Signup login = {login} toggleLogin = {this.toggleLoginSignup.bind(this)}/>
+                <Footer />
             </div>
 
         );
