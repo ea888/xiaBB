@@ -1,11 +1,7 @@
 class Signup extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            userName: '',
-            password: '',
-            email: ''
-        };
+        this.state = {};
     }
 
     handleFieldChange(event) {
@@ -13,30 +9,41 @@ class Signup extends React.Component {
         this.setState({[key]: event.target.value});
     }
 
-    signUp() {
+    signUp(event) {
+        event.preventDefault();
+
         let user = {
             name: this.state.userName,
             password: this.state.password,
             email: this.state.email
         };
 
-        console.log(user);
         axios.post('user', user)
             .then(res => {
-                console.log(res);
-                console.log(res.data);
+                // console.log(res);
+                // console.log(res.data);
+                this.setState({resData: res.data});
+                // alert(JSON.stringify(res.data));
             })
     }
 
     render() {
-        // console.log("sign up:"+this.props.login);
+        let msg = this.state.resData;
+
         if (this.props.login)
             return (<div></div>);
+        else if(msg)
+            return(
+                <div>
+                    <h4>{JSON.stringify(msg)}</h4>
+                </div>
+            );
         else
             return (
                 <div>
                     <h4>Signup</h4>
                     {/*Need to bind(this) whenever this.state is used within the function */}
+                    <form>
                     <div>Username:</div>
                     <div><input id="userName" type="text" onChange={this.handleFieldChange.bind(this)}/></div>
                     <div>Password:</div>
@@ -44,11 +51,13 @@ class Signup extends React.Component {
                     <div>Email:</div>
                     <div><input id="email" type="email" onChange={this.handleFieldChange.bind(this)}/></div>
                     <div>
-                        <button onClick={this.signUp.bind(this)}>Sign up</button>
+                        <input type="submit" value="Sign up" onClick={this.signUp.bind(this)}/>
                         <button onClick={this.props.toggleLogin}>Go to login</button>
                     </div>
+                    </form>
                 </div>
             );
+
     }
 }
 
@@ -104,7 +113,7 @@ class Greeting extends React.Component {
 
     render() {
         //get state, then pass to sub dom using {}
-        const login = this.state.login;
+        let login = this.state.login;
 
         return (
             //everything must be enclosed within one element
