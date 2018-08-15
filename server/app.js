@@ -13,7 +13,7 @@ const mongoUrl = "mongodb://localhost:27017/xiaBB";
 
 /** connect to MongoDB datastore */
 try {
-    mongoose.connect(mongoUrl, { useNewUrlParser: true });
+    mongoose.connect(mongoUrl, {useNewUrlParser: true});
 } catch (error) {
     console.log(error);
 }
@@ -31,8 +31,8 @@ app.use(bodyParser.json());
 app.use(express.static('../public'));
 app.use('/', router);
 //welcome page
-app.get('/', function(req, res){
-    res.sendfile('index.html', { root: __dirname + "/public" } );
+app.get('/', function (req, res) {
+    res.sendfile('index.html', {root: __dirname + "/public"});
 });
 
 /** start server */
