@@ -27,6 +27,10 @@ class Signup extends React.Component {
             })
     }
 
+    goBack(){
+        this.setState({resData: undefined});
+    }
+
     render() {
         let msg = this.state.resData;
 
@@ -36,6 +40,7 @@ class Signup extends React.Component {
             return(
                 <div>
                     <h4>{JSON.stringify(msg)}</h4>
+                    <button onClick={this.goBack.bind(this)}>Go back</button>
                 </div>
             );
         else

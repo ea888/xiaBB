@@ -1,17 +1,22 @@
 const User = require('./../models/user');
+var validator = require("email-validator");
 
 module.exports = {
     addUser: (req, res, next) => {
         let {name, email, password} = req.body;
-        const user = new User({name, email, password});
-        // const user = new User(req.body);
-        user.save((err, user) => {
-            if (err)
-                res.send(err);
-            else
-                res.send(user);
-            next();
-        });
+        if (validator.validate(email)) {
+            const user = new User({name, email, password});
+            // const user = new User(req.body);
+            user.save((err, user) => {
+                if (err)
+                    res.send(err);
+                else
+                    res.send(user);
+                next();
+            });
+        } else {
+            res.send("Email address is not valid.");
+        }
     },
     getAll: (req, res, next) => {
         User.find().exec((err, user) => {
