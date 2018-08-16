@@ -1,12 +1,9 @@
+let helper = new Helper();
+
 class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-    }
-
-    handleFieldChange(event) {
-        const key = event.target.id;
-        this.setState({[key]: event.target.value});
     }
 
     signUp(event) {
@@ -50,11 +47,11 @@ class Signup extends React.Component {
                     {/*Need to bind(this) whenever this.state is used within the function */}
                     <form>
                     <div>Username:</div>
-                    <div><input id="userName" type="text" onChange={this.handleFieldChange.bind(this)}/></div>
+                    <div><input id="userName" type="text" onChange={helper.handleFieldChange.bind(this)}/></div>
                     <div>Password:</div>
-                    <div><input id="password" type="password" onChange={this.handleFieldChange.bind(this)}/></div>
+                    <div><input id="password" type="password" onChange={helper.handleFieldChange.bind(this)}/></div>
                     <div>Email:</div>
-                    <div><input id="email" type="email" onChange={this.handleFieldChange.bind(this)}/></div>
+                    <div><input id="email" type="email" onChange={helper.handleFieldChange.bind(this)}/></div>
                     <div>
                         <input type="submit" value="Sign up" onClick={this.signUp.bind(this)}/>
                         <button onClick={this.props.toggleLogin}>Go to login</button>
@@ -67,6 +64,10 @@ class Signup extends React.Component {
 }
 
 class Login extends React.Component {
+    login(){
+
+    }
+
     render() {
         // console.log("login:"+this.props.login);
         if (this.props.login)
