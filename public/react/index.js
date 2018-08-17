@@ -24,7 +24,7 @@ class Signup extends React.Component {
             })
     }
 
-    goBack(){
+    goBack() {
         this.setState({resData: undefined});
     }
 
@@ -33,8 +33,8 @@ class Signup extends React.Component {
 
         if (this.props.login)
             return (<div></div>);
-        else if(msg)
-            return(
+        else if (msg)
+            return (
                 <div>
                     <h4>{JSON.stringify(msg)}</h4>
                     <button onClick={this.goBack.bind(this)}>Go back</button>
@@ -46,16 +46,16 @@ class Signup extends React.Component {
                     <h4>Signup</h4>
                     {/*Need to bind(this) whenever this.state is used within the function */}
                     <form>
-                    <div>Username:</div>
-                    <div><input id="userName" type="text" onChange={helper.handleFieldChange.bind(this)}/></div>
-                    <div>Password:</div>
-                    <div><input id="password" type="password" onChange={helper.handleFieldChange.bind(this)}/></div>
-                    <div>Email:</div>
-                    <div><input id="email" type="email" onChange={helper.handleFieldChange.bind(this)}/></div>
-                    <div>
-                        <input type="submit" value="Sign up" onClick={this.signUp.bind(this)}/>
-                        <button onClick={this.props.toggleLogin}>Go to login</button>
-                    </div>
+                        <div>Username:</div>
+                        <div><input id="userName" type="text" onChange={helper.handleFieldChange.bind(this)}/></div>
+                        <div>Password:</div>
+                        <div><input id="password" type="password" onChange={helper.handleFieldChange.bind(this)}/></div>
+                        <div>Email:</div>
+                        <div><input id="email" type="email" onChange={helper.handleFieldChange.bind(this)}/></div>
+                        <div>
+                            <input type="submit" value="Sign up" onClick={this.signUp.bind(this)}/>
+                            <button onClick={this.props.toggleLogin}>Go to login</button>
+                        </div>
                     </form>
                 </div>
             );
@@ -64,22 +64,42 @@ class Signup extends React.Component {
 }
 
 class Login extends React.Component {
-    login(){
+    constructor(props) {
+        super(props);
+        //must declare the state before using it, but not necessarily to define its fields
+        this.state = {};
+    }
 
+    login() {
+        axios.get('login/' + this.state.name + '/' + this.state.password)
+            .then(res => {
+                this.setState({count: res.data.count});
+                if(this.state.count === 0){
+                    alert("Wrong username/password pair.");
+                }
+            })
+    }
+
+    logout(){
+        this.setState({count: 0})
     }
 
     render() {
-        // console.log("login:"+this.props.login);
-        if (this.props.login)
+        if (this.state.count === 1) {
+            return (<div>
+                <h4>Logged</h4>
+                <button onClick={this.logout.bind(this)}>Log out</button>
+            </div>);
+        } else if (this.props.login)
             return (
                 <div>
                     <h4>Login</h4>
                     <div>Username:</div>
-                    <div><input type="text"/></div>
+                    <div><input type="text" id="name" onChange={helper.handleFieldChange.bind(this)}/></div>
                     <div>Password:</div>
-                    <div><input type="password"/></div>
+                    <div><input type="password" id="password" onChange={(helper.handleFieldChange.bind(this))}/></div>
                     <div>
-                        <button>Login</button>
+                        <button onClick={this.login.bind(this)}>Login</button>
                         <button onClick={this.props.toggleLogin}>Go to sign up</button>
                     </div>
                 </div>

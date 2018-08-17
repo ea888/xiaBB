@@ -20,8 +20,6 @@ module.exports = {
     },
     getAll: (req, res, next) => {
         User.find().exec((err, user) => {
-            // .populate('author')
-            // .populate('comments.author').exec((err, article)=> {
             if (err)
                 res.send(err);
             else if (!user)
@@ -45,6 +43,17 @@ module.exports = {
                 res.send(404);
             else
                 res.send(user);
+            next()
+        })
+    },
+
+    login: (req, res, next) => {
+        let {name, password} = req.params;
+        User.countDocuments({name: name, password: password}).exec((err, count) => {
+            if (err)
+                res.send(err);
+            else
+                res.send({count: count});
             next()
         })
     }

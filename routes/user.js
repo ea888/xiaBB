@@ -24,4 +24,8 @@ module.exports = (router) => {
     router
         .route('/user/:id')
         .get(userCtrl.getUser);
+
+    router
+        .route('/login/:name/:password')
+        .get(userCtrl.login);
 };
