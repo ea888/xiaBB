@@ -67,25 +67,31 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         //must declare the state before using it, but not necessarily to define its fields
-        this.state = {};
+        this.state = {
+            logged : false
+        };
     }
 
     login() {
         axios.get('login/' + this.state.name + '/' + this.state.password)
             .then(res => {
-                this.setState({count: res.data.count});
-                if(this.state.count === 0){
+                this.setState({token: res.data});
+                console.log(this.state.token);
+                if(this.state.token.success){
+                    this.setState({logged: true});
+                }else{
                     alert("Wrong username/password pair.");
                 }
             })
     }
 
     logout(){
-        this.setState({count: 0})
+        this.setState({logged: false})
+        this.setState({token: {}})
     }
 
     render() {
-        if (this.state.count === 1) {
+        if (this.state.logged) {
             return (<div>
                 <h4>Logged</h4>
                 <button onClick={this.logout.bind(this)}>Log out</button>

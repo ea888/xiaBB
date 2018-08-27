@@ -1,14 +1,13 @@
 /** require dependencies */
 const express = require("express");
-const routes = require('../routes/routers');
 const mongoose = require('mongoose');
 // const cors = require('cors');
 // const helmet = require('helmet');
 const bodyParser = require('body-parser');
-
+const config = require('./config');
+var morgan = require('morgan');
 const app = express();
-const router = express.Router();
-const mongoUrl = "mongodb://localhost:27017/xiaBB";
+const mongoUrl = config.database;
 
 
 /** connect to MongoDB datastore */
@@ -20,8 +19,7 @@ try {
 
 let port = 5000;
 
-/** set up routes {API Endpoints} */
-routes(router);
+
 
 /** set up middlewares */
 // app.use(cors());
@@ -29,11 +27,26 @@ routes(router);
 app.use(bodyParser.json());
 //serve static content
 app.use(express.static('../public'));
-app.use('/', router);
 //welcome page
 app.get('/', function (req, res) {
     res.sendfile('index.html', {root: __dirname + "/public"});
 });
+
+//login routers
+const login = require('../routes/loginSignup');
+const loginRouter = express.Router();
+login(loginRouter);
+app.use('/', loginRouter);
+
+/** set up routes {API Endpoints} */
+const router = express.Router();
+const routes = require('../routes/routers');
+routes(router);
+app.use('/api', router);
+
+// use morgan to log requests to the console
+app.use(morgan('dev'));
+
 
 /** start server */
 app.listen(port, () => {

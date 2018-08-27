@@ -1,5 +1,7 @@
 const User = require('./../models/user');
 var validator = require("email-validator");
+var jwt = require('jsonwebtoken');
+var config = require('./../server/config');
 
 module.exports = {
     addUser: (req, res, next) => {
@@ -50,11 +52,29 @@ module.exports = {
     login: (req, res, next) => {
         let {name, password} = req.params;
         User.countDocuments({name: name, password: password}).exec((err, count) => {
-            if (err)
-                res.send(err);
-            else
-                res.send({count: count});
-            next()
-        })
+                if (err)
+                    res.send(err);
+                else {
+                    if (count === 1) {
+                        const payload = {};
+                        var token = jwt.sign(payload, config.secret, {
+                            expiresIn: '5h' // expires in 5 hours
+                        });
+                        // return the information including token as JSON
+                        res.json({
+                            success: true,
+                            message: 'Enjoy your token!',
+                            token: token
+                        });
+                    }
+                    else {
+                        res.json({
+                            success: false
+                        });
+                    }
+                }
+                next()
+            }
+        )
     }
 };

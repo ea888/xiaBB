@@ -12,20 +12,9 @@ module.exports = (router) => {
         .get(userCtrl.getAll);
 
     /**
-     * add an user
-     */
-    router
-        .route('/user')
-        .post(userCtrl.addUser);
-
-    /**
      * get a particular user to view
      */
     router
         .route('/user/:id')
         .get(userCtrl.getUser);
-
-    router
-        .route('/login/:name/:password')
-        .get(userCtrl.login);
 };
