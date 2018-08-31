@@ -8,8 +8,7 @@ module.exports = (router) => {
      * get all users
      */
     router
-        .route('/users')
-        .get(userCtrl.getAll);
+        .get('/users',userCtrl.getAll);
 
     /**
      * get a particular user to view
